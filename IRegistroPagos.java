@@ -8,6 +8,7 @@ package ventanas;
 
 import clases.ModelTablaPagos;
 import clases.Pago;
+import java.awt.Cursor;
 import java.awt.Rectangle;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
@@ -33,8 +34,9 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
         mtp = new  ModelTablaPagos();
         this.tblPago.setModel(mtp);
         Rectangle visibleRect = mainApp.getVisibleRect();       
-        this.setSize(visibleRect.width-1150, visibleRect.height);
-        this.tblPago.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //this.setSize(visibleRect.width-1150, visibleRect.height);
+        this.setBounds(((visibleRect.width)/4), 0,visibleRect.width-600, visibleRect.height);
+        this.tblPago.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         this.txtNombreCliente.getDocument().addDocumentListener(EscuchadorBuscar);
     }
 
@@ -50,9 +52,9 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         lbNoExiste = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        bntNuevo = new javax.swing.JButton();
-        bntActualizar = new javax.swing.JButton();
-        bntElliminar = new javax.swing.JButton();
+        bntNuevo = new javax.swing.JButton("Nuevo Pago");
+        bntActualizar = new javax.swing.JButton("Editar un Pago");
+        bntElliminar = new javax.swing.JButton("Eliminar un Pago");
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPago = new javax.swing.JTable();
@@ -70,7 +72,7 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Nombre del Cliente:");
+        jLabel1.setText("Buscar Pago:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 6);
         jPanel4.add(jLabel1, gridBagConstraints);
@@ -98,8 +100,9 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
-        bntNuevo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_add.png"))); // NOI18N
+        bntNuevo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        bntNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_add.png")));
+        bntNuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntNuevoActionPerformed(evt);
@@ -108,7 +111,8 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
         jPanel5.add(bntNuevo);
 
         bntActualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_edit.png"))); // NOI18N
+        bntActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_edit.png")));
+        bntActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntActualizarActionPerformed(evt);
@@ -117,7 +121,8 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
         jPanel5.add(bntActualizar);
 
         bntElliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntElliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_delete.png"))); // NOI18N
+        bntElliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_delete.png")));
+        bntElliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntElliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntElliminarActionPerformed(evt);
@@ -237,21 +242,29 @@ public class IRegistroPagos extends javax.swing.JInternalFrame {
     {
         try {
             String nombreBuscar = e.getDocument().getText(0, e.getDocument().getLength());
-            ModelTablaPagos mtu = new ModelTablaPagos(nombreBuscar);
-            if(!nombreBuscar.isEmpty())
-            {
-                if(mtu.estVacio())
+            
+            //ModelTablaPagos mtu = new ModelTablaPagos(nombreBuscar);
+            
+            if(e.getDocument().getLength() > 1){
+                int nBuscar = Integer.valueOf(nombreBuscar);
+                ModelTablaPagos mtu = new ModelTablaPagos(nBuscar);
+                if(!nombreBuscar.isEmpty())
                 {
-                    this.lbNoExiste.setText("El Cliente "+nombreBuscar+" no existe");
-                    mtp = new ModelTablaPagos();                
+                    if(mtu.estVacio())
+                    {
+                        this.lbNoExiste.setText("El Monto "+nombreBuscar+" no existe");
+                        mtp = new ModelTablaPagos();                
+                    }else{
+                        mtp = mtu;       
+                        this.lbNoExiste.setText("");
+                    }               
                 }else{
-                    mtp = mtu;       
+                    mtp = new ModelTablaPagos();
+                }
+            }else{
+                    mtp = new ModelTablaPagos();    
                     this.lbNoExiste.setText("");
-                }               
-            }else
-            {
-                mtp = new ModelTablaPagos();
-            }
+                }
              this.tblPago.setModel(mtp);
             if(nombreBuscar.isEmpty())
             {

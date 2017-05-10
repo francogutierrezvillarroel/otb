@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ventanas;
 
-import clases.ModelTablaPagos;
-import clases.Pago;
+import clases.ModelTablaCobros;
+import clases.Cobro;
+import java.awt.Cursor;
 import java.awt.Rectangle;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
@@ -16,7 +11,7 @@ import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-import paneles.PnlNuevoPago;
+import paneles.PnlNuevoCobro;
 
 /**
  *
@@ -27,16 +22,17 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
     /**
      * Creates new form IRegistroCobros
      */
-    private ModelTablaPagos mtp;
+    private ModelTablaCobros mtp;
     public IRegistroCobros(JDesktopPane mainApp) {
         initComponents();
-        mtp = new  ModelTablaPagos();
+        mtp = new  ModelTablaCobros();
         this.tblPago.setModel(mtp);
         Rectangle visibleRect = mainApp.getVisibleRect();       
         //this.setSize(visibleRect.width-999, visibleRect.height);
-        this.tblPago.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setBounds(((visibleRect.width)/4), 0,visibleRect.width-600, visibleRect.height);
+        this.tblPago.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         this.txtNombreCliente.getDocument().addDocumentListener(EscuchadorBuscar);
-        this.setBounds(visibleRect.width-999, visibleRect.height,200, 100);
+        
     }
 
     private void initComponents() {
@@ -50,9 +46,9 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         lbNoExiste = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        bntNuevo = new javax.swing.JButton();
-        bntActualizar = new javax.swing.JButton();
-        bntElliminar = new javax.swing.JButton();
+        bntNuevo = new javax.swing.JButton("Nuevo Cobro");
+        bntActualizar = new javax.swing.JButton("Editar un Cobro");
+        bntElliminar = new javax.swing.JButton("Eliminar un Cobro");
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPago = new javax.swing.JTable();
@@ -70,7 +66,7 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Nombre del Cliente:");
+        jLabel1.setText("Nombre del Vecino:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 6);
         jPanel4.add(jLabel1, gridBagConstraints);
@@ -99,7 +95,8 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         bntNuevo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_add.png"))); // NOI18N
+        bntNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_add.png"))); 
+        bntNuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntNuevoActionPerformed(evt);
@@ -108,7 +105,8 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         jPanel5.add(bntNuevo);
 
         bntActualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_edit.png"))); // NOI18N
+        bntActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_edit.png"))); 
+        bntActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntActualizarActionPerformed(evt);
@@ -117,7 +115,8 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         jPanel5.add(bntActualizar);
 
         bntElliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        bntElliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_delete.png"))); // NOI18N
+        bntElliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imagenes/page_delete.png")));
+        bntElliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bntElliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntElliminarActionPerformed(evt);
@@ -154,9 +153,9 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
     }
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {
-        PnlNuevoPago pvc = new PnlNuevoPago();
-       JLabel aviso = pvc.getLabelEscondido();
-        JOptionPane.showInternalOptionDialog(this, pvc, "Registrar Nuevo pago",JOptionPane.OK_CANCEL_OPTION,
+        PnlNuevoCobro pvc = new PnlNuevoCobro();
+        JLabel aviso = pvc.getLabelEscondido();
+        JOptionPane.showInternalOptionDialog(this, pvc, "Registrar Nuevo cobro",JOptionPane.OK_CANCEL_OPTION,
                                             JOptionPane.QUESTION_MESSAGE, null, new Object[]{aviso},null);
         if(pvc.IsProcesoOk())
         {
@@ -168,10 +167,10 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
        int indice = this.tblPago.getSelectedRow();
        if(indice != -1)
        {
-           Pago pagoSeleccionado = mtp.getPago(indice);
-           PnlNuevoPago pvc = new PnlNuevoPago(pagoSeleccionado);
+           Cobro pagoSeleccionado = mtp.getPago(indice);
+           PnlNuevoCobro pvc = new PnlNuevoCobro(pagoSeleccionado);
             JLabel aviso = pvc.getLabelEscondido();
-             JOptionPane.showInternalOptionDialog(this, pvc, "Actualizar Pago pago",JOptionPane.OK_CANCEL_OPTION,
+             JOptionPane.showInternalOptionDialog(this, pvc, "Actualizar cobro",JOptionPane.OK_CANCEL_OPTION,
                                                  JOptionPane.QUESTION_MESSAGE, null, new Object[]{aviso},null);
              if(pvc.IsProcesoOk())
              {
@@ -188,8 +187,8 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
         int indice = this.tblPago.getSelectedRow();
        if(indice != -1)
        {
-           Pago pagoSeleccionado = mtp.getPago(indice);
-            int confirmacion = JOptionPane.showInternalConfirmDialog(this, "¿Realmente desea borrar este pago?", "Eliminar Pago", JOptionPane.YES_NO_CANCEL_OPTION);
+           Cobro pagoSeleccionado = mtp.getPago(indice);
+            int confirmacion = JOptionPane.showInternalConfirmDialog(this, "¿Realmente desea borrar este cobro?", "Eliminar Cobro", JOptionPane.YES_NO_CANCEL_OPTION);
             
             if(confirmacion == JOptionPane.OK_OPTION)
             {
@@ -197,9 +196,9 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
                 if(borrar != 0)
                 {
                     reiniciarTabla();
-                    JOptionPane.showMessageDialog(this, "Pago eliminado correctamente", "Pago Borrado", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Cobro eliminado correctamente", "Cobro Borrado", JOptionPane.INFORMATION_MESSAGE);
                 }else{
-                    JOptionPane.showMessageDialog(this, "No se pudo Pudo borrar el pago", "Error Interno", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se pudo Pudo borrar el cobro", "Error Interno", JOptionPane.ERROR_MESSAGE);
                 }
             }
             
@@ -212,7 +211,7 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
     
     public void reiniciarTabla()
     {
-        mtp = new  ModelTablaPagos();
+        mtp = new  ModelTablaCobros();
         this.tblPago.setModel(mtp);
     }
     DocumentListener EscuchadorBuscar = new DocumentListener(){
@@ -237,20 +236,20 @@ public class IRegistroCobros extends javax.swing.JInternalFrame {
     {
         try {
             String nombreBuscar = e.getDocument().getText(0, e.getDocument().getLength());
-            ModelTablaPagos mtu = new ModelTablaPagos(nombreBuscar);
+            ModelTablaCobros mtu = new ModelTablaCobros(nombreBuscar);
             if(!nombreBuscar.isEmpty())
             {
                 if(mtu.estVacio())
                 {
                     this.lbNoExiste.setText("El Cliente "+nombreBuscar+" no existe");
-                    mtp = new ModelTablaPagos();                
+                    mtp = new ModelTablaCobros();                
                 }else{
                     mtp = mtu;       
                     this.lbNoExiste.setText("");
                 }               
             }else
             {
-                mtp = new ModelTablaPagos();
+                mtp = new ModelTablaCobros();
             }
              this.tblPago.setModel(mtp);
             if(nombreBuscar.isEmpty())

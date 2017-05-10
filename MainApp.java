@@ -304,7 +304,7 @@ public class MainApp extends javax.swing.JFrame {
         mRegistrodeCobros.setCursor(new Cursor(Cursor.HAND_CURSOR));
         mRegistrodeCobros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mRegistrodePagosActionPerformed(evt);
+                mRegistrodeCobrosActionPerformed(evt);
             }
         });
         mCobros.add(mRegistrodeCobros);

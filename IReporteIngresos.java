@@ -8,7 +8,7 @@ import paneles.PnlReporteIngresos;
 
 /**
  *
- * @author programadorbipolar
+ * @author skysoftgo
  */
 public class IReporteIngresos extends javax.swing.JInternalFrame {
 

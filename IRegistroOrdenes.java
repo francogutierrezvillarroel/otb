@@ -33,8 +33,10 @@ public class IRegistroOrdenes extends javax.swing.JInternalFrame {
         modeloTablaOrdenes = new ModelTablaOrdenes();
         this.tblPagos.setModel(modeloTablaOrdenes);
          Rectangle visibleRect = mainApp.getVisibleRect();       
-        this.setSize(visibleRect.width-160, visibleRect.height);
-        this.tblPagos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //this.setSize(visibleRect.width-160, visibleRect.height);
+        //this.tblPagos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        this.setBounds(((visibleRect.width)/4), 0,visibleRect.width-600, visibleRect.height);
+        this.tblPagos.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         this.txtNombreCliente.getDocument().addDocumentListener(EscuchadorBuscar);
     }
 
