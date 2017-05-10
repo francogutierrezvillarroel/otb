@@ -8,125 +8,100 @@ import java.util.Date;
 
 /**
  *
- * @author programadorbipolar
+ * @author skysoftgo
  */
 public class Pago {
-    private int clvFolio;
-    private Cliente NroCuenta;
-    private Date fechaCubierta;
-    private int mesesTranscurridos;
-    private Date fechaDePago;
-    private double rezago;
-    private double pagoCalculado;
-    private double recargo;
-    private double total;
-    private Date fechaDeRegistro;
+    private int id_pago;
+    private Date fecha_pago;
+    private String motivo_pago;
+    private double monto_pago;
+    private String obs;
+    private int id_otb; 
+    private int nrofolio;
     
     //consultas sql
     public static String NOMBRE_TABLA = "tblpago";
     public static String SELECCIONAR_TODO = "select * from "+Pago.NOMBRE_TABLA;
-
-    public Pago(int clvFolio, Cliente NroCuenta) {
-        this.clvFolio = clvFolio;
-        this.NroCuenta = NroCuenta;
+    
+    public Pago(int id_pago) {
+        this.id_pago = id_pago;
     }
 
-    public Pago(int clvFolio, Cliente NroCuenta, Date fechaCubierta, int mesesTranscurridos, Date fechaDePago, double rezago, double pagoCalculado, double recargo, double total, Date fechaDeRegistro) {
-        this.clvFolio = clvFolio;
-        this.NroCuenta = NroCuenta;
-        this.fechaCubierta = fechaCubierta;
-        this.mesesTranscurridos = mesesTranscurridos;
-        this.fechaDePago = fechaDePago;
-        this.rezago = rezago;
-        this.pagoCalculado = pagoCalculado;
-        this.recargo = recargo;
-        this.total = total;
-        this.fechaDeRegistro = fechaDeRegistro;
+    public Pago(int id_pago, Date fecha_pago) {
+        this.id_pago = id_pago;
+        this.fecha_pago = fecha_pago;
+    }
+
+    public Pago(int id_pago, Date fecha_pago, double monto_pago, String motivo_pago, String obs, int id_otb, int nrofolio) {
+        this.id_pago = id_pago;
+        this.fecha_pago = fecha_pago;
+        this.monto_pago = monto_pago;
+        this.motivo_pago = motivo_pago;
+        this.obs = obs;
+        this.id_otb = id_otb;
+        this.nrofolio = nrofolio;
     }
 
     public Pago() {
     }    
     
 
-    public int getClvFolio() {
-        return clvFolio;
+    public int getid_pago() {
+        return id_pago;
     }
 
-    public void setClvFolio(int clvFolio) {
-        this.clvFolio = clvFolio;
+    public void setid_pago(int id_pago) {
+        this.id_pago = id_pago;
     }
 
-    public Cliente getNroCuenta() {
-        return NroCuenta;
+    public Date getfecha_pago() {
+        return fecha_pago;
     }
 
-    public void setNroCuenta(Cliente NroCuenta) {
-        this.NroCuenta = NroCuenta;
+    public void setfecha_pago(Date fecha_pago) {
+        this.fecha_pago = fecha_pago;
+    }
+    
+    public Double getmonto_pago() {
+        return monto_pago;
     }
 
-    public Date getFechaCubierta() {
-        return fechaCubierta;
+    public void setmonto_pago(Double monto_pago) {
+        this.monto_pago = monto_pago;
+    }
+    
+    public String getmotivo_pago() {
+        return motivo_pago;
     }
 
-    public void setFechaCubierta(Date fechaCubierta) {
-        this.fechaCubierta = fechaCubierta;
+    public void setmotivo_pago(String motivo_pago) {
+        this.motivo_pago = motivo_pago;
     }
 
-    public int getMesesTranscurridos() {
-        return mesesTranscurridos;
+    public String getobs() {
+        return obs;
     }
 
-    public void setMesesTranscurridos(int mesesTranscurridos) {
-        this.mesesTranscurridos = mesesTranscurridos;
+    public void setobs(String obs) {
+        this.obs = obs;
     }
 
-    public Date getFechaDePago() {
-        return fechaDePago;
+    public int getid_otb() {
+        return id_otb;
     }
 
-    public void setFechaDePago(Date fechaDePago) {
-        this.fechaDePago = fechaDePago;
+    public void setid_otb(int id_otb) {
+        this.id_otb = id_otb;
     }
 
-    public double getRezago() {
-        return rezago;
+    public int getnrofolio() {
+        return nrofolio;
     }
 
-    public void setRezago(double rezago) {
-        this.rezago = rezago;
+    public void setnrofolio(int nrofolio) {
+        this.nrofolio = nrofolio;
     }
-
-    public double getPagoCalculado() {
-        return pagoCalculado;
-    }
-
-    public void setPagoCalculado(double pagoCalculado) {
-        this.pagoCalculado = pagoCalculado;
-    }
-
-    public double getRecargo() {
-        return recargo;
-    }
-
-    public void setRecargo(double recargo) {
-        this.recargo = recargo;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public Date getFechaDeRegistro() {
-        return fechaDeRegistro;
-    }
-
-    public void setFechaDeRegistro(Date fechaDeRegistro) {
-        this.fechaDeRegistro = fechaDeRegistro;
-    }
+    
     
      public String getFormatearFecha(Date fecha, String formato)
     {   
@@ -140,34 +115,25 @@ public class Pago {
     
     public int grabar()
     {
-        String sql = "INSERT INTO tblpago ("+
-             "NoCuenta,FechaCubierta,MesesTranscurridos,"+
-             "FechaDePago,Rezago,PagoCalculado,"+
-             "Recargo,Total,FechaDeRegistro)"+
-             "VALUES ("+this.NroCuenta.getNumeroCuenta()+","+
-             "'"+this.getFormatearFecha(this.fechaCubierta, null)+"',"+this.mesesTranscurridos+",'"+this.getFormatearFecha(this.fechaDePago, null)+"',"+
-             this.rezago+","+this.pagoCalculado+","+this.recargo+","+
-             this.total+",'"+this.getFormatearFecha(this.fechaDeRegistro, null)+"')";
+        String sql = "INSERT INTO tblpago (Fecha_Pago,Monto_Pago,Motivo_Pago,Observacion,ID_OTB,NroFolio)"+
+             "VALUES ('"+this.getFormatearFecha(this.fecha_pago, null)+"','"+this.monto_pago+"','"+this.motivo_pago+"','"+this.obs+"','"+this.id_otb+"','"+this.nrofolio+"')";
         return Conexion.guardarRegistro(sql);
     }
 
     public int actualizar(){
-        String sql = "UPDATE tblpago "+
-                    "SET NoCuenta = "+this.NroCuenta.getNumeroCuenta()+","+
-                    "FechaCubierta = '"+this.getFormatearFecha(this.fechaCubierta, null)+"',"+
-                    "MesesTranscurridos = "+this.mesesTranscurridos+","+
-                    "FechaDePago = '"+this.getFormatearFecha(this.fechaDePago, null)+"',"+
-                    "Rezago = "+this.rezago+","+
-                    "PagoCalculado = "+this.pagoCalculado+","+
-                    "Recargo = "+this.recargo+","+
-                    "Total = "+this.total+","+
-                    "FechaDeRegistro = '"+this.getFormatearFecha(this.fechaDeRegistro, null)+"'"+
-                    " WHERE ClvFolio = "+this.clvFolio;
+        String sql = "UPDATE tblpago SET ID_PAGO = '"+this.id_pago+"',"+
+                    "Fecha_Pago  = '"+this.getFormatearFecha(this.fecha_pago, null)+"',"+
+                    "Monto_Pago  = '"+this.monto_pago+"',"+
+                    "Motivo_Pago = '"+this.motivo_pago+"',"+
+                    "Observacion = '"+this.obs+"',"+
+                    "ID_OTB      = '"+this.id_otb+"',"+
+                    "NroFolio    = '"+this.nrofolio+"'"+
+                    " WHERE ID_PAGO = "+this.id_pago;
         return Conexion.guardarRegistro(sql); 
     }
     
     public int borrar(){
-        String sql = "DELETE FROM tblpago WHERE ClvFolio = "+this.clvFolio;
+        String sql = "DELETE FROM tblpago WHERE ID_PAGO = "+this.id_pago;
         return Conexion.guardarRegistro(sql);
     }
     
@@ -178,16 +144,13 @@ public class Pago {
             while(pagos.next())
             {
                 Pago pago = new Pago();
-                pago.setClvFolio(pagos.getInt(1));
-                pago.setNroCuenta(Cliente.getCliente(pagos.getInt(2)));
-                pago.setFechaCubierta(pagos.getDate(3));
-                pago.setMesesTranscurridos(pagos.getInt(4));
-                pago.setFechaDePago(pagos.getDate(5));
-                pago.setRezago(pagos.getDouble(6));
-                pago.setPagoCalculado(pagos.getDouble(7));
-                pago.setRecargo(pagos.getDouble(8));
-                pago.setTotal(pagos.getDouble(9));
-                pago.setFechaDeRegistro(pagos.getDate(10));
+                pago.setid_pago(pagos.getInt(1));
+                pago.setfecha_pago(pagos.getDate(2));
+                pago.setmonto_pago(pagos.getDouble(3));
+                pago.setmotivo_pago(pagos.getString(4));
+                pago.setobs(pagos.getString(5));
+                pago.setid_otb(pagos.getInt(6));
+                pago.setnrofolio(pagos.getInt(7));
                 ListaPagos.add(pago);
             }
             pagos.close();
@@ -197,22 +160,19 @@ public class Pago {
     }
     
     public static ArrayList<Pago> getPagos(String fechaInicio, String FechaFinal){
-        ResultSet pagos = Conexion.getRegistros(Pago.SELECCIONAR_TODO+" where FechaDeRegistro >= '"+fechaInicio+"' and FechaDeRegistro<='"+FechaFinal+"'");
+        ResultSet pagos = Conexion.getRegistros(Pago.SELECCIONAR_TODO+" where Fecha_Pago >= '"+fechaInicio+"' and Fecha_Pago<='"+FechaFinal+"'");
         ArrayList<Pago> ListaPagos= new ArrayList();
          try{
             while(pagos.next())
             {
                 Pago pago = new Pago();
-                pago.setClvFolio(pagos.getInt(1));
-                pago.setNroCuenta(Cliente.getCliente(pagos.getInt(2)));
-                pago.setFechaCubierta(pagos.getDate(3));
-                pago.setMesesTranscurridos(pagos.getInt(4));
-                pago.setFechaDePago(pagos.getDate(5));
-                pago.setRezago(pagos.getDouble(6));
-                pago.setPagoCalculado(pagos.getDouble(7));
-                pago.setRecargo(pagos.getDouble(8));
-                pago.setTotal(pagos.getDouble(9));
-                pago.setFechaDeRegistro(pagos.getDate(10));
+                pago.setid_pago(pagos.getInt(1));
+                pago.setfecha_pago(pagos.getDate(2));
+                pago.setmonto_pago(pagos.getDouble(3));
+                pago.setmotivo_pago(pagos.getString(4));
+                pago.setobs(pagos.getString(5));
+                pago.setid_otb(pagos.getInt(6));
+                pago.setnrofolio(pagos.getInt(7));
                 ListaPagos.add(pago);
             }
             pagos.close();
@@ -233,16 +193,41 @@ public class Pago {
             while(pagos.next())
             {
                 Pago pago = new Pago();
-                pago.setClvFolio(pagos.getInt(1));
-                pago.setNroCuenta(Cliente.getCliente(pagos.getInt(2)));
-                pago.setFechaCubierta(pagos.getDate(3));
-                pago.setMesesTranscurridos(pagos.getInt(4));
-                pago.setFechaDePago(pagos.getDate(5));
-                pago.setRezago(pagos.getDouble(6));
-                pago.setPagoCalculado(pagos.getDouble(7));
-                pago.setRecargo(pagos.getDouble(8));
-                pago.setTotal(pagos.getDouble(9));
-                pago.setFechaDeRegistro(pagos.getDate(10));
+                pago.setid_pago(pagos.getInt(1));
+                pago.setfecha_pago(pagos.getDate(2));
+                pago.setmonto_pago(pagos.getDouble(3));
+                pago.setmotivo_pago(pagos.getString(4));
+                pago.setobs(pagos.getString(5));
+                pago.setid_otb(pagos.getInt(6)); 
+                pago.setnrofolio(pagos.getInt(7));
+                ListaPagos.add(pago);
+            }
+            pagos.close();
+            Conexion.con.close();
+        }catch(SQLException ex){ex.printStackTrace();}
+         if(ListaPagos.size()>0)
+            return ListaPagos;
+         return null;
+    }
+    
+    public static ArrayList<Pago> getPagos(int nPago)
+    {
+        //Cliente cliente = Cliente.getClientePorNombre(nPago);
+        //if(cliente == null)
+        //    return null;
+        ResultSet pagos = Conexion.getRegistros(Pago.SELECCIONAR_TODO+" where Monto_Pago = "+nPago);
+        ArrayList<Pago> ListaPagos= new ArrayList();
+         try{
+            while(pagos.next())
+            {
+                Pago pago = new Pago();
+                pago.setid_pago(pagos.getInt(1));
+                pago.setfecha_pago(pagos.getDate(2));
+                pago.setmonto_pago(pagos.getDouble(3));
+                pago.setmotivo_pago(pagos.getString(4));
+                pago.setobs(pagos.getString(5));
+                pago.setid_otb(pagos.getInt(6)); 
+                pago.setnrofolio(pagos.getInt(7));
                 ListaPagos.add(pago);
             }
             pagos.close();

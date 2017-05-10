@@ -5,11 +5,11 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author programadorbipolar
+ * @author skysoftgo
  */
 public class ModelTablaOrdenes extends AbstractTableModel{
 
-     private String[] nombreColumnas = {"Fecha","Cliente","Tipo","Inspèctor",
+     private String[] nombreColumnas = {"Fecha","Vecino","Tipo","Inspèctor",
                                         "Motivo Corte"};
     private ArrayList<Orden> ordenes;
     

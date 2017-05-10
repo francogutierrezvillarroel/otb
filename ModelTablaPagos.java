@@ -9,9 +9,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTablaPagos extends AbstractTableModel{
 
-    private String[] nombreColumnas = {"Cliente","Fec. Cubierta","Meses Transcurridos","Fec de Pago","Rezago",
-                                        "Pago Calculado","Recargo","Total","Fec. de Registro",
-                                        };
+    private String[] nombreColumnas = {"ID Pago","Fecha del Pago","Monto del Pago","Motivo del Pago","Observación","ID_OTB","Nro Folio"};
     private ArrayList<Pago> pagos;
     
     
@@ -26,7 +24,9 @@ public class ModelTablaPagos extends AbstractTableModel{
     public ModelTablaPagos(String nombreBuscar) {
         pagos = Pago.getPagos(nombreBuscar);
     }
-    
+    public ModelTablaPagos(int nBuscar) {
+        pagos = Pago.getPagos(nBuscar);
+    }
     
     @Override
     public int getRowCount() {
@@ -54,16 +54,13 @@ public class ModelTablaPagos extends AbstractTableModel{
         Pago pago = pagos.get(rowIndex);
         switch(columnIndex)
         {
-            
-            case 0: return pago.getNroCuenta().getNombre();
-            case 1: return pago.getFormatearFecha(pago.getFechaCubierta(), "dd/MM/yyyy");
-            case 2: return pago.getMesesTranscurridos();
-            case 3: return pago.getFormatearFecha(pago.getFechaDePago(), "dd/MM/yyyy");
-            case 4: return pago.getRezago();
-            case 5: return pago.getPagoCalculado();
-            case 6: return pago.getRecargo();
-            case 7: return pago.getTotal();
-            case 8: return pago.getFormatearFecha(pago.getFechaDeRegistro(), "dd/MM/yyyy");    
+            case 0: return pago.getid_pago();
+            case 1: return pago.getFormatearFecha(pago.getfecha_pago(), "dd/MM/yyyy");
+            case 2: return pago.getmonto_pago();
+            case 3: return pago.getmotivo_pago();
+            case 4: return pago.getobs();
+            case 5: return pago.getid_otb();
+            case 6: return pago.getnrofolio();
             default: return null;
         }
     }

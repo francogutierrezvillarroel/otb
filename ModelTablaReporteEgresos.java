@@ -8,12 +8,12 @@ import java.util.Date;
  *
  * @author programadorbipolar
  */
-public class ModelTablaReporteIngresos extends ModelTablaPagos{
+public class ModelTablaReporteEgresos extends ModelTablaPagos{
     
-    private String[] nombreColumnas = {"ID","Fec. de Registro","Total"};
+    private String[] nombreColumnas = {"ID Pago","Fecha de Pago","Motivo del Pago","Monto del Pago","Observación","ID OTB"};
     private ArrayList<Pago> pagos;
 
-    public ModelTablaReporteIngresos(Date fechaInicio, Date fechaFinal) {
+    public ModelTablaReporteEgresos(Date fechaInicio, Date fechaFinal) {
         
         pagos = Pago.getPagos(this.getFormatearFecha(fechaInicio, null),this.getFormatearFecha(fechaFinal, null));
      }
@@ -57,10 +57,12 @@ public class ModelTablaReporteIngresos extends ModelTablaPagos{
         Pago pago = pagos.get(rowIndex);
         switch(columnIndex)
         {
-            
             case 0: return pago.getid_pago();
             case 1: return pago.getFormatearFecha(pago.getfecha_pago(), "dd/MM/yyyy");
-            case 2: return pago.getmonto_pago();               
+            case 2: return pago.getmotivo_pago();
+            case 4: return pago.getmonto_pago();
+            case 5: return pago.getobs();
+            case 6: return pago.getid_otb();                
             default: return null;
         }
     }
